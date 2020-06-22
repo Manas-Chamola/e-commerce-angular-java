@@ -88,7 +88,7 @@ export class ProductListComponent implements OnInit {
 
     this.previousKeyword = theKeyword;
 
-    console.log(`heyword= ${theKeyword}`);
+    console.log(`keyword= ${theKeyword}`);
 
     this.productService
       .searchProductsPaginate(
