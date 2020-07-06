@@ -48,18 +48,24 @@
                   (pageChange)="listProducts()"
                 >
                 </ngb-pagination>
-              </div>
 
-              <div class="col-md-3 mt-2" style="text-align: right;">
-                <span class="mr-2">Page Size</span>
-
-                <select (change)="updatePageSize($event.target.value)">
-                  <option selected="true">5</option>
-                  <option>2</option>
-                  <option>10</option>
-                  <option>20</option>
-                  <option>50</option>
-                </select>
+                <div
+                  class="col-md-3 mt-2"
+                  style="text-align: right; margin-left: 35%;"
+                >
+                  <span
+                    class="mr-2"
+                    style="display: inline-block; width: max-content;"
+                  >
+                    Page Size
+                    <select (change)="updatePageSize($event.target.value)">
+                      <option selected="true">5</option>
+                      <option>10</option>
+                      <option>20</option>
+                      <option>50</option>
+                    </select>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
