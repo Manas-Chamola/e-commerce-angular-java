@@ -42,12 +42,13 @@
             <div class="col-md-2"><label>Country</label></div>
             <div class="col-md-9">
               <div class="input-space">
-                <select formControlName="country">
-                  <option>USA</option>
-                  <option>UK</option>
-                  <option>Canada</option>
-                  <option>India</option>
-                  <option>Germany</option>
+                <select
+                  formControlName="country"
+                  (change)="getStates('shippingAddress')"
+                >
+                  <option *ngFor="let country of countries" [ngValue]="country">
+                    {{ country.name }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -76,11 +77,12 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select formControlName="state">
-                  <option>CA</option>
-                  <option>NY</option>
-                  <option>MH</option>
-                  <option>DL</option>
-                  <option>GJ</option>
+                  <option
+                    *ngFor="let state of shippingAddressStates"
+                    [ngValue]="state"
+                  >
+                    {{ state.name }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -117,11 +119,9 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select formControlName="country">
-                  <option>USA</option>
-                  <option>UK</option>
-                  <option>Canada</option>
-                  <option>India</option>
-                  <option>Germany</option>
+                  <option *ngFor="let country of countries" [ngValue]="country">
+                    {{ country.name }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -149,12 +149,16 @@
             <div class="col-md-2"><label>State</label></div>
             <div class="col-md-9">
               <div class="input-space">
-                <select formControlName="state">
-                  <option>CA</option>
-                  <option>NY</option>
-                  <option>MH</option>
-                  <option>DL</option>
-                  <option>GJ</option>
+                <select
+                  formControlName="state"
+                  (change)="getStates('billingAddressStates')"
+                >
+                  <option
+                    *ngFor="let state of billingAddressStates"
+                    [ngValue]="state"
+                  >
+                    {{ state.name }}
+                  </option>
                 </select>
               </div>
             </div>

@@ -13,8 +13,10 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 
+import com.ecommerce.entity.Country;
 import com.ecommerce.entity.Product;
 import com.ecommerce.entity.ProductCategory;
+import com.ecommerce.entity.State;
 
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer{
@@ -33,18 +35,24 @@ public class MyDataRestConfig implements RepositoryRestConfigurer{
 		HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
 		
 		//diable HttpMethods for Product: PUT, POST, DELETE
-		config.getExposureConfiguration()
-		.forDomainType(Product.class)
-		.withItemExposure((metdata, HttpMethods) -> HttpMethods.disable(theUnsupportedActions))
-		.withCollectionExposure((metdata, HttpMethods) -> HttpMethods.disable(theUnsupportedActions));
+		disableHttpMethod(Product.class,config, theUnsupportedActions);
 		
 		//diable HttpMethods for ProductCategory: PUT, POST, DELETE
-		config.getExposureConfiguration()
-		.forDomainType(ProductCategory.class)
-		.withItemExposure((metdata, HttpMethods) -> HttpMethods.disable(theUnsupportedActions))
-		.withCollectionExposure((metdata, HttpMethods) -> HttpMethods.disable(theUnsupportedActions));
+		disableHttpMethod(ProductCategory.class,config, theUnsupportedActions);
+		
+		disableHttpMethod(Country.class,config, theUnsupportedActions);
+		
+		disableHttpMethod(State.class,config, theUnsupportedActions);
 		
 		exposeIds(config);
+	}
+
+	private void disableHttpMethod(Class theClass,RepositoryRestConfiguration config,
+			HttpMethod[] theUnsupportedActions) {
+		config.getExposureConfiguration()
+		.forDomainType(theClass)
+		.withItemExposure((metdata, HttpMethods) -> HttpMethods.disable(theUnsupportedActions))
+		.withCollectionExposure((metdata, HttpMethods) -> HttpMethods.disable(theUnsupportedActions));
 	}
 	
 	private void exposeIds(RepositoryRestConfiguration config) {

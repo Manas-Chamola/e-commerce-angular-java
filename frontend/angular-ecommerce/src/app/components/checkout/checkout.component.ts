@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ShopFormService } from 'src/app/services/shop-form.service';
+import { Country } from 'src/app/common/country';
+import { State } from 'src/app/common/state';
 
 @Component({
   selector: 'app-checkout',
@@ -15,6 +17,10 @@ export class CheckoutComponent implements OnInit {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
+  countries: Country[] = [];
+
+  shippingAddressStates: State[] = [];
+  billingAddressStates: State[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,6 +70,10 @@ export class CheckoutComponent implements OnInit {
     });
 
     //populate credit card years
+
+    this.shopFormService.getCountries().subscribe((data) => {
+      this.countries = data;
+    });
   }
 
   copyShippingAddressToBillingAddress(event) {
@@ -99,5 +109,23 @@ export class CheckoutComponent implements OnInit {
 
   onSubmit() {
     console.log(this.checkoutFormGroup.get('customer').value);
+  }
+
+  getStates(formGroupName: string) {
+    const formGroup = this.checkoutFormGroup.get(formGroupName);
+
+    const countryCode = formGroup.value.country.code;
+    const countryName = formGroup.value.country.name;
+
+    this.shopFormService.getStates(countryCode).subscribe((data) => {
+      if (formGroupName === 'shippingAddress') {
+        this.shippingAddressStates = data;
+      } else {
+        this.billingAddressStates = data;
+      }
+
+      //select first item by default
+      formGroup.get('state').setValue(data[0]);
+    });
   }
 }
